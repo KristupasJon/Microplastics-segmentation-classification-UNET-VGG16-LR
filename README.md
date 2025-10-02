@@ -4,23 +4,89 @@ This repository contains the experimental code developed for the segmentation an
 
 ## Overview
 
-The goal of this project is to segment and classify microplastics in images using deep learning techniques. The pipeline includes:
+This project addresses the challenging problem of microplastic identification in environmental samples through an innovative computer vision pipeline. Unlike traditional supervised learning approaches, this work tackles the complex scenario of having only unlabeled images with poor quality conditions, requiring the development of novel unsupervised and semisupervised techniques.
 
-1. **Segmentation**: Using a U-Net model to segment microplastics in images.
-2. **Feature Extraction**: Leveraging a pre-trained VGG16 model to extract features from segmented regions.
-3. **Classification**: Using Logistic Regression to classify the extracted features into predefined categories.
+**The Challenge**: Working with a dataset containing only raw microscopic images and corresponding segmentation masks, without any classification labels. The images exhibited poor quality conditions typical of environmental sampling, making standard deep learning approaches ineffective.
+
+**The Solution**: A sophisticated three stage pipeline that combines segmentation, feature extraction, and unsupervised classification:
+
+1. **Semantic Segmentation**: A U-Net architecture identifies and segments microplastic particles from complex environmental backgrounds, handling the binary segmentation task of separating particles from debris and organic matter.
+
+2. **Deep Feature Extraction**: A pre trained VGG16 network extracts high dimensional feature representations from segmented microplastic regions, leveraging transfer learning to capture meaningful visual patterns despite the limited and unlabeled dataset.
+
+3. **Unsupervised Classification**: KMeans clustering applied to extracted features automatically discovers natural groupings in the data, with pseudo labels assigned to create three distinct microplastic categories: oval, string, and other morphological types. A Logistic Regression classifier then learns to map features to these discovered categories.
+
+**Innovation**: The key innovation lies in the pseudo labeling strategy that transforms an unsupervised problem into a supervised one, combined with extensive data augmentation to overcome dataset limitations. This approach demonstrates how advanced machine learning techniques can be applied to real world environmental monitoring challenges where labeled data is scarce or unavailable.
+
+## Dataset Challenges and Solutions
+
+### **Major Challenge: Unlabeled Dataset with Poor Image Quality**
+
+This project faced significant challenges that required innovative solutions:
+
+- **Unlabeled Data**: The dataset contained only raw images and segmentation masks without classification labels
+- **Poor Image Quality**: Images were of suboptimal quality, making traditional supervised learning approaches difficult
+- **Limited Data**: Small dataset size required careful handling to prevent overfitting
+- **Manual Labeling Burden**: Creating labels manually would have been extremely timeconsuming and prone to human error
+
+### **Solutions Implemented**
+
+#### **1. KMeans Clustering for Pseudo Labeling**
+Since the dataset lacked classification labels, I implemented an unsupervised approach:
+- Extracted features from segmented regions using pretrained VGG16
+- Applied KMeans clustering (k=3) to group similar microplastic features
+- Assigned pseudolabels based on dominant patterns in each cluster
+- This approach automatically categorized microplastics into three classes: oval, string, and other
+
+#### **2. Data Augmentation for Small Dataset**
+To address the limited dataset size, I implemented several augmentation techniques:
+- **Horizontal Flipping**: 50% probability to flip images left or right
+- **Random Rotation**: 0°, 90°, 180°, or 270° rotations
+- **Brightness Adjustment**: Random brightness changes (±0.1) to simulate varying lighting conditions
+- These techniques effectively expanded the training data while maintaining realistic variations
+
+## Model Architecture Justification
+
+### **U-Net for Segmentation**
+- **Chosen because**: Excellent performance on biomedical image segmentation tasks
+- **Skip connections**: Preserve details essential for accurate microplastic boundaries
+- **Encoder decoder structure**: Captures both local and global context effectively
+- **Binary output**: Perfect for microplastic vs. background segmentation
+
+### **VGG16 for Feature Extraction**
+- **Pretrained on ImageNet**: Leverages learned features from millions of images
+- **Robust feature extraction**: Captures texture, shape, and color patterns effectively
+- **Transfer learning**: Reduces training time and improves performance on limited data
+- **Global average pooling**: Provides fixed size feature vectors regardless of input patch size
+
+### **Logistic Regression for Classification**
+- **Computational efficiency**: Fast training and inference on extracted features
+- **Interpretability**: Clear understanding of feature importance and decision boundaries
+- **Class balancing**: Built in support for handling imbalanced datasets
+- **Regularization**: L2 regularization prevents overfitting on limited data
+
+## Technical Implementation Details
+
+### **Hyperparameter Optimization**
+- Grid search with 3-fold cross-validation for optimal parameters
+- Tested solvers: 'lbfgs', 'sag', 'saga', 'newton-cg'
+- Regularization strength (C): [0.01, 0.1, 1, 10]
+- Class weighting: 'balanced' to handle class imbalances
+
+### **Evaluation Metrics**
+- **Segmentation**: Accuracy, Precision, Recall, F1 score, Jaccard Index
+- **Classification**: Macro averaged precision and recall, confusion matrices
+- **Cross-validation**: 3-fold CV for robust performance estimation
 
 ## Features
 
 - **U-Net Model**: A convolutional neural network architecture for image segmentation.
-- **VGG16 Feature Extraction**: Pre-trained VGG16 model for extracting meaningful features from segmented regions.
+- **VGG16 Feature Extraction**: Pretrained VGG16 model for extracting meaningful features from segmented regions.
 - **Logistic Regression Classifier**: A lightweight and efficient classifier for microplastic classification.
 - **Data Augmentation**: Techniques to improve model generalization.
-- **Evaluation Metrics**: Includes accuracy, precision, recall, F1-score, and Jaccard index.
-
-## Dataset
-
-The dataset consists of images and corresponding masks for microplastic segmentation.
+- **Evaluation Metrics**: Includes accuracy, precision, recall, F1 score, and Jaccard index.
+- **Pseudo Labeling**: KMeans clustering approach to handle unlabeled data.
+- **Class Balancing**: Weighted loss functions to handle imbalanced datasets.
 
 ## Results
 
@@ -29,7 +95,3 @@ The project achieves high accuracy in segmenting and classifying microplastics. 
 ## Acknowledgments
 
 This project was developed as part of a Software Engineering Bachelor's thesis at Vilnius University. Special thanks to the university and the advisors for their guidance and support.
-
-## Author
-
-Kristupas Jon (https://github.com/KristupasJon)
