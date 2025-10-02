@@ -2,7 +2,10 @@
 
 This repository contains the experimental code developed for the segmentation and classification of microplastics using U-Net, VGG16, and Logistic Regression. The project was developed as part of a Software Engineering Bachelor's thesis at Vilnius University.
 
-<img width="1827" height="439" alt="image" src="https://github.com/user-attachments/assets/26ea0b98-d80d-4afc-ae1a-55364e2df139" />
+<img width="1824" height="440" alt="image" src="https://github.com/user-attachments/assets/368e727f-b417-408e-a1e7-a94801557ce7" />
+<img width="1826" height="441" alt="image" src="https://github.com/user-attachments/assets/eb1ec69a-5f30-41eb-90ac-6436862f1209" />
+<img width="1826" height="437" alt="image" src="https://github.com/user-attachments/assets/60ccc459-1eda-4eff-9f8c-25625f5de41b" />
+
 
 ## Overview
 
