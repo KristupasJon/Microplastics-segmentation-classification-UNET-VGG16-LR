@@ -2,6 +2,8 @@
 
 This repository contains the experimental code developed for the segmentation and classification of microplastics using U-Net, VGG16, and Logistic Regression. The project was developed as part of a Software Engineering Bachelor's thesis at Vilnius University.
 
+<img width="1827" height="439" alt="image" src="https://github.com/user-attachments/assets/26ea0b98-d80d-4afc-ae1a-55364e2df139" />
+
 ## Overview
 
 This project addresses the challenging problem of microplastic identification in environmental samples through an innovative computer vision pipeline. Unlike traditional supervised learning approaches, this work tackles the complex scenario of having only unlabeled images with poor quality conditions, requiring the development of novel unsupervised and semisupervised techniques.
