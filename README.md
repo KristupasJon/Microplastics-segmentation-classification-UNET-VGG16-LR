@@ -11,9 +11,11 @@ This repository contains the experimental code developed for the segmentation an
 
 This project addresses the challenging problem of microplastic identification in environmental samples through an innovative computer vision pipeline. Unlike traditional supervised learning approaches, this work tackles the complex scenario of having only unlabeled images with poor quality conditions, requiring the development of novel unsupervised and semisupervised techniques.
 
-**The Challenge**: Working with a dataset containing only raw microscopic images and corresponding segmentation masks, without any classification labels. The images exhibited poor quality conditions typical of environmental sampling, making standard deep learning approaches ineffective.
+**The Challenge**
+Working with a dataset containing only raw microscopic images and corresponding segmentation masks, without any classification labels. The images exhibited poor quality conditions typical of environmental sampling, making standard deep learning approaches ineffective.
 
-**The Solution**: A sophisticated three stage pipeline that combines segmentation, feature extraction, and unsupervised classification:
+**The Solution**
+A sophisticated three stage pipeline that combines segmentation, feature extraction, and unsupervised classification:
 
 1. **Semantic Segmentation**: A U-Net architecture identifies and segments microplastic particles from complex environmental backgrounds, handling the binary segmentation task of separating particles from debris and organic matter.
 
@@ -21,7 +23,9 @@ This project addresses the challenging problem of microplastic identification in
 
 3. **Unsupervised Classification**: KMeans clustering applied to extracted features automatically discovers natural groupings in the data, with pseudo labels assigned to create three distinct microplastic categories: oval, string, and other morphological types. A Logistic Regression classifier then learns to map features to these discovered categories.
 
-**Innovation**: The key innovation lies in the pseudo labeling strategy that transforms an unsupervised problem into a supervised one, combined with extensive data augmentation to overcome dataset limitations. This approach demonstrates how advanced machine learning techniques can be applied to real world environmental monitoring challenges where labeled data is scarce or unavailable.
+**Innovation**: The key innovation lies in the pseudo labeling strategy that transforms an unsupervised problem into a supervised one, combined with extensive data augmentation to overcome dataset limitations. 
+**Practical Impact for Scientists**
+This approach demonstrates that minimal manual labeling effort (only a small CSV file with basic annotations) can achieve robust classification results, significantly reducing the time scientists need to spend on tedious data labeling tasks. Even as a proof of concept, this pipeline shows that advanced machine learning can provide effective workarounds for the traditional grunt work of extensive dataset annotation, allowing researchers to focus on analysis rather than data preparation.
 
 ## Dataset Challenges and Solutions
 
@@ -42,6 +46,7 @@ Since the dataset lacked classification labels, I implemented an unsupervised ap
 - Applied KMeans clustering (k=3) to group similar microplastic features
 - Assigned pseudolabels based on dominant patterns in each cluster
 - This approach automatically categorized microplastics into three classes: oval, string, and other
+- Only a small CSV file with limited manual labels was used for validation, proving that extensive manual labeling by scientists is unnecessary for effective results
 
 #### **2. Data Augmentation for Small Dataset**
 To address the limited dataset size, I implemented several augmentation techniques:
